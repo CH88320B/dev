@@ -1,0 +1,15 @@
+# Carpetas de compilación y dependencias
+node_modules/
+.vite/
+build/
+
+# Archivos de Visual Studio
+.vs/
+*.vsidx
+*.vscode/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+
