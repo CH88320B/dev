@@ -13,6 +13,7 @@
           "Microsoft.EntityFrameworkCore": "9.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.3",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.3",
+          "RabbitMQ.Client": "6.2.0",
           "Swashbuckle.AspNetCore": "6.6.2"
         },
         "runtime": {
@@ -803,6 +804,18 @@
           }
         }
       },
+      "RabbitMQ.Client/6.2.0": {
+        "dependencies": {
+          "System.Memory": "4.5.4",
+          "System.Threading.Channels": "7.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/RabbitMQ.Client.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.6.2": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -1480,6 +1493,13 @@
       "sha512": "sha512-QYFyxhaABwmq3p/21VrZNYvCg3DaEoN/wUuw5nmfAf0X3HLjgupwhkEWdgfb9nvGAUIv3osmZoD3kKl4jxEmYQ==",
       "path": "newtonsoft.json.bson/1.0.2",
       "hashPath": "newtonsoft.json.bson.1.0.2.nupkg.sha512"
+    },
+    "RabbitMQ.Client/6.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Uhupj9Thk4Thcn/6UYZp9Ry6ty5w40H6S5uhqkkn3ZAAB+hnIpPj1oHEgds6jhFPu9tXb+jI0hKPGcWgN2CuxA==",
+      "path": "rabbitmq.client/6.2.0",
+      "hashPath": "rabbitmq.client.6.2.0.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.6.2": {
       "type": "package",

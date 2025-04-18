@@ -1,203 +1,149 @@
-# README - Despliegue de WebAPI .NET con Docker y Kubernetes + Azure SQL
+WebApiPolizasRabbit
 
-Este README documenta el proceso completo para desplegar una Web API .NET Core en Docker, exponerla usando Kubernetes y conectarla a una base de datos Azure SQL.
+Aplicación .NET 8 Web API para gestión de pólizas de seguros, conectada a una base de datos en Azure SQL Database y enviando mensajes a una cola RabbitMQ.
+El proyecto está dockerizado para facilitar su despliegue y pruebas locales.
 
----
+🚀 Tecnologías usadas
+.NET 8
 
-## ✨ Tecnologías Usadas
+SQL Server (Azure SQL Database)
 
-- .NET 8 (Web API)
-- Docker
-- Kubernetes (local con Docker Desktop)
-- Azure SQL Database
-- MacOS (host con Parallels para Windows)
+RabbitMQ
 
----
+Docker
 
-## 📚 Estructura del Proyecto
+Entity Framework Core
 
-```
-CRUD_MANT_POLIZAS/
-├── WebApiPolizas/            # Proyecto WebAPI
-│   ├── Controllers/
-│   ├── Models/
-│   ├── appsettings.json
-│   ├── WebApiPolizas.csproj
-│   └── Program.cs
-├── Dockerfile                # Archivo para construir la imagen
-├── k8s/
-│   ├── deployment.yaml       # Despliegue K8s
-│   └── service.yaml          # Servicio K8s
-```
+Swagger
 
----
+📂 Estructura del proyecto
+Controllers: Lógica de API (CRUD de pólizas, envío de mensajes a RabbitMQ).
 
-## ⚙️ Paso 1 - Crear el archivo Dockerfile
+Models: Modelos de base de datos y DTOs.
 
-Ubicado en la raíz del proyecto:
+Services: Servicio RabbitMQProducer para publicar en la cola.
 
-```dockerfile
-# Etapa de build
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
-COPY . .
-RUN dotnet restore
-RUN dotnet publish -c Release -o out
+📦 Instalación y ejecución local (Docker)
+Clonar el repositorio
 
-# Etapa de runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /app
-COPY --from=build /app/out .
-ENTRYPOINT ["dotnet", "WebApiPolizas.dll"]
-```
+bash
+Copy
+Edit
+git clone https://github.com/tuusuario/WebApiPolizasRabbit.git
+cd WebApiPolizasRabbit
+Crear la carpeta para llaves de protección
 
----
+bash
+Copy
+Edit
+mkdir dataProtectionKeys
+Compilar y construir la imagen Docker
 
-## 🚀 Paso 2 - Construir y ejecutar con Docker
 
-```bash
-docker build -t webapi-polizas .
+docker build -t webapi-polizas-rabbit .
+Levantar contenedor de RabbitMQ (si no lo tienes ya corriendo)
 
-docker run -d -p 8080:8080 \
-  -v "$(pwd)/appsettings.json:/app/appsettings.json" \
-  webapi-polizas
-```
 
-**Nota:** Asegurate de que el puerto 8080 no esté ocupado.
+docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
+La consola de administración estará disponible en: http://localhost:15672
 
-Verificá:
+Usuario: guest
 
-```bash
-curl http://localhost:8080/swagger/index.html
-```
+Contraseña: guest
 
----
+Levantar contenedor de la Web API
 
-## 📁 Paso 3 - Configuración de appsettings.json para Azure SQL
 
-```json
+docker run -d -p 8083:8080 -v $(pwd)/dataProtectionKeys:/root/.aspnet/DataProtection-Keys --name webapi-polizas-rabbit webapi-polizas-rabbit
+🔥 Importante: El parámetro -v ./dataProtectionKeys:/root/.aspnet/DataProtection-Keys asegura persistencia de claves de protección de datos.
+
+📄 Endpoints disponibles
+Consultar pólizas
+bash
+Copy
+Edit
+GET http://localhost:8083/api/Poliza/Lista
+Buscar pólizas por filtros
+bash
+Copy
+Edit
+GET http://localhost:8083/api/Poliza/Buscar?numeroPoliza=ABSH001
+Insertar nueva póliza
+bash
+Copy
+Edit
+POST http://localhost:8083/api/Poliza/Nuevo
+Content-Type: application/json
+Body ejemplo:
+
+json
+Copy
+Edit
 {
-  "ConnectionStrings": {
-    "ConnectSQL": "Server=tcp:polizasserverhj2025.database.windows.net,1433;Initial Catalog=DBPolizas;Persist Security Info=False;User ID=admin;Password=TuPassword123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*"
+  "numeroPoliza": "ABSH001",
+  "tipoPolizaId": 1,
+  "cedulaAsegurado": "01-8526-4930",
+  "montoAsegurado": 250000,
+  "fechaVencimiento": "2025-12-31T00:00:00",
+  "fechaEmision": "2024-01-01T00:00:00",
+  "coberturaId": 1,
+  "estadoPolizaId": 1,
+  "prima": 1500,
+  "periodo": "2025-12-31T00:00:00",
+  "fechaInclusion": "2024-01-01T00:00:00",
+  "aseguradoraId": 1
 }
-```
+Enviar póliza a RabbitMQ
+bash
+Copy
+Edit
+POST http://localhost:8083/api/Poliza/send
+Content-Type: application/json
+Body igual al anterior.
+Este endpoint enviará el JSON a la cola polizaQueue en RabbitMQ.
 
-Verificá conectividad desde Mac:
+📋 Notas importantes
+El API utiliza una conexión definida en appsettings.json para conectarse a Azure SQL:
 
-```bash
-ping polizasserverhj2025.database.windows.net
-```
+json
+Copy
+Edit
+"ConnectionStrings": {
+  "ConnectSQL": "Server=tcp:polizasserverhj2025.database.windows.net,1433;Initial Catalog=DBPolizas;Persist Security Info=False;User ID=admin;UserID=Tupasswrod!Polizas;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+}
+RabbitMQ debe estar accesible usando el hostname rabbitmq (por ser otro contenedor).
 
-Y usando `sqlcmd`:
+Se configuró CORS para permitir cualquier origen durante pruebas locales (AllowAnyOrigin()).
 
-```bash
-sqlcmd -S tcp:polizasserverhj2025.database.windows.net,1433 \
-  -U admihj -P 'TuPassword123!' -d DBPolizas -N -C
-```
+La WebAPI usa Swagger, accede a la documentación en:
 
----
 
-## 🚧 Paso 4 - Subir imagen a Docker Hub
+http://localhost:8083/swagger
+🛠 Comandos útiles
+Ver contenedores activos:
 
-```bash
-docker tag webapi-polizas hjclabsdocker/webapi-polizas:latest
-docker push hjclabsdocker/webapi-polizas:latest
-```
 
----
+docker ps
+Ver logs del contenedor de la API:
 
-## ⚖️ Paso 5 - Desplegar en Kubernetes
 
-**deployment.yaml**
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: webapi-polizas
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: webapi-polizas
-  template:
-    metadata:
-      labels:
-        app: webapi-polizas
-    spec:
-      containers:
-      - name: webapi-polizas
-        image: hjclabsdocker/webapi-polizas:latest
-        ports:
-        - containerPort: 8080
-```
+docker logs webapi-polizas-rabbit
+Detener y eliminar contenedor:
 
-**service.yaml**
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: webapi-polizas-service
-spec:
-  type: NodePort
-  selector:
-    app: webapi-polizas
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
-      nodePort: 30080
-```
 
-Aplicar los manifiestos:
+docker rm -f webapi-polizas-rabbit
+Recompilar la imagen si hay cambios:
 
-```bash
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-```
 
-Ver:
+docker build -t webapi-polizas-rabbit .
+🙌 Autor
+Desarrollado por Henderson J. Castañeda
+LinkedIn | GitHub
 
-```bash
-kubectl get pods
-kubectl get svc
-```
 
-Accedé a:
 
-```
-http://localhost:30080/swagger/index.html
-```
 
----
 
-## 🪤 Tips y errores comunes
 
-- ⚠️ *Port already allocated*: Asegurate de detener contenedores anteriores con `docker stop <id>`.
-- ⚠️ *ConnectionString not initialized*: Verificá que el `appsettings.json` esté correctamente montado.
-- Para editar dentro del contenedor:
 
-```bash
-docker exec -it <container_id> sh
-```
-
----
-
-## 📖 Recursos Adicionales
-
-- [Documentación oficial Docker](https://docs.docker.com/)
-- [Documentación Kubernetes](https://kubernetes.io/docs/)
-- [Conexión .NET con Azure SQL](https://learn.microsoft.com/sql/connect/)
-
----
-
-## 🙌 Hecho por: **Henderson J.**
-Con fines educativos y de despliegue profesional.
 

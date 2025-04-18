@@ -140,7 +140,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApiPolizas.Models.Cliente, WebApiPolizas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApiPolizas.Models.Cliente, WebApiPolizasRabbit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -285,6 +285,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WebApiPolizas.Controllers.PolizaController",
+    "Method": "SendPoliza",
+    "RelativePath": "api/Poliza/send",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "poliza",
+        "Type": "WebApiPolizas.Models.Poliza",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebApiPolizas.Controllers.TipoPolizaController",
     "Method": "GetTiposPoliza",
     "RelativePath": "api/TipoPoliza/Lista",
@@ -314,7 +330,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApiPolizas.WeatherForecast, WebApiPolizas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[WebApiPolizas.WeatherForecast, WebApiPolizasRabbit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

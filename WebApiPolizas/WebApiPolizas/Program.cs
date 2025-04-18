@@ -2,6 +2,7 @@ using WebApiPolizas.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WebApiPolizas.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,18 +18,14 @@ builder.Services.AddDbContext<PolizasDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectSQL"));
 });
 
-
-//builder.Services.AddControllers()
-// .AddJsonOptions(x =>
-//   x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
-
+// Agregar configuración para usar Newtonsoft.Json
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
     });
 
-
+// Configuración de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("NuevaPolitica", app =>
@@ -37,7 +34,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-
+// Configuración de autenticación y JWT Bearer
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -55,15 +52,16 @@ builder.Services.AddAuthentication("Bearer")
 
 builder.Services.AddAuthorization();
 
+// Inyección de RabbitMQConsumerService como Scoped
+builder.Services.AddHostedService<RabbitMQConsumerService>(); 
+builder.Services.AddScoped<RabbitMQProducer>(); 
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("NuevaPolitica");
 app.UseAuthentication();

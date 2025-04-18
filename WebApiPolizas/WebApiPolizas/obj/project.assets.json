@@ -1073,6 +1073,23 @@
           }
         }
       },
+      "RabbitMQ.Client/6.2.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Memory": "4.5.4",
+          "System.Threading.Channels": "4.7.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/RabbitMQ.Client.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/RabbitMQ.Client.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.6.2": {
         "type": "package",
         "dependencies": {
@@ -1690,7 +1707,7 @@
       "System.Threading.Channels/7.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0/_._": {
+          "lib/net7.0/System.Threading.Channels.dll": {
             "related": ".xml"
           }
         },
@@ -3968,6 +3985,25 @@
         "newtonsoft.json.bson.nuspec"
       ]
     },
+    "RabbitMQ.Client/6.2.0": {
+      "sha512": "Uhupj9Thk4Thcn/6UYZp9Ry6ty5w40H6S5uhqkkn3ZAAB+hnIpPj1oHEgds6jhFPu9tXb+jI0hKPGcWgN2CuxA==",
+      "type": "package",
+      "path": "rabbitmq.client/6.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "icon.png",
+        "lib/net461/RabbitMQ.Client.dll",
+        "lib/net461/RabbitMQ.Client.pdb",
+        "lib/net461/RabbitMQ.Client.xml",
+        "lib/netstandard2.0/RabbitMQ.Client.dll",
+        "lib/netstandard2.0/RabbitMQ.Client.pdb",
+        "lib/netstandard2.0/RabbitMQ.Client.xml",
+        "rabbitmq.client.6.2.0.nupkg.sha512",
+        "rabbitmq.client.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.6.2": {
       "sha512": "+NB4UYVYN6AhDSjW0IJAd1AGD8V33gemFNLPaxKTtPkHB+HaKAKf9MGAEUPivEWvqeQfcKIw8lJaHq6LHljRuw==",
       "type": "package",
@@ -5117,35 +5153,29 @@
       "Microsoft.EntityFrameworkCore >= 9.0.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.3",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.3",
+      "RabbitMQ.Client >= 6.2.0",
       "Swashbuckle.AspNetCore >= 6.6.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hendersoncastaneda\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/hendersoncastaneda/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hendersoncastaneda\\Documents\\CRUD_MANT_POLIZAS_ult_version\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj",
-      "projectName": "WebApiPolizas",
-      "projectPath": "C:\\Users\\hendersoncastaneda\\Documents\\CRUD_MANT_POLIZAS_ult_version\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj",
-      "packagesPath": "C:\\Users\\hendersoncastaneda\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hendersoncastaneda\\Documents\\CRUD_MANT_POLIZAS_ult_version\\WebApiPolizas\\WebApiPolizas\\obj\\",
+      "projectUniqueName": "/Users/hendersoncastaneda/Documents/TestWebApiPolizasRabbit/WebApiPolizas/WebApiPolizas/WebApiPolizasRabbit.csproj",
+      "projectName": "WebApiPolizasRabbit",
+      "projectPath": "/Users/hendersoncastaneda/Documents/TestWebApiPolizasRabbit/WebApiPolizas/WebApiPolizas/WebApiPolizasRabbit.csproj",
+      "packagesPath": "/Users/hendersoncastaneda/.nuget/packages/",
+      "outputPath": "/Users/hendersoncastaneda/Documents/TestWebApiPolizasRabbit/WebApiPolizas/WebApiPolizas/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\hendersoncastaneda\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/hendersoncastaneda/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5163,8 +5193,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.200"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -5192,6 +5221,10 @@
             "target": "Package",
             "version": "[9.0.3, )"
           },
+          "RabbitMQ.Client": {
+            "target": "Package",
+            "version": "[6.2.0, )"
+          },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.6.2, )"
@@ -5216,7 +5249,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.408/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

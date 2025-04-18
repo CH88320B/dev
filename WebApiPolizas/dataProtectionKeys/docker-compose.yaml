@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  webapi-polizas:
+    image: webapi-polizas-rabbit
+    ports:
+      - "8083:8080"
+    volumes:
+      - ./dataProtectionKeys:/root/.aspnet/DataProtection-Keys
+

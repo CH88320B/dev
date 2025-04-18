@@ -351,6 +351,42 @@
         }
       }
     },
+    "/api/Poliza/send": {
+      "post": {
+        "tags": [
+          "Poliza"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poliza"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poliza"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poliza"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poliza"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Poliza/Lista": {
       "get": {
         "tags": [

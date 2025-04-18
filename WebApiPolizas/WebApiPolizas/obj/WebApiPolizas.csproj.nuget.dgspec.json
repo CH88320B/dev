@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hendersoncastaneda\\Documents\\CRUD_MANT_POLIZAS_ult_version\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj": {}
+    "C:\\Users\\hendersoncastaneda\\Documents\\TestWebApiPolizasRabbit\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hendersoncastaneda\\Documents\\CRUD_MANT_POLIZAS_ult_version\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj": {
+    "C:\\Users\\hendersoncastaneda\\Documents\\TestWebApiPolizasRabbit\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hendersoncastaneda\\Documents\\CRUD_MANT_POLIZAS_ult_version\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj",
+        "projectUniqueName": "C:\\Users\\hendersoncastaneda\\Documents\\TestWebApiPolizasRabbit\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj",
         "projectName": "WebApiPolizas",
-        "projectPath": "C:\\Users\\hendersoncastaneda\\Documents\\CRUD_MANT_POLIZAS_ult_version\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj",
+        "projectPath": "C:\\Users\\hendersoncastaneda\\Documents\\TestWebApiPolizasRabbit\\WebApiPolizas\\WebApiPolizas\\WebApiPolizas.csproj",
         "packagesPath": "C:\\Users\\hendersoncastaneda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hendersoncastaneda\\Documents\\CRUD_MANT_POLIZAS_ult_version\\WebApiPolizas\\WebApiPolizas\\obj\\",
+        "outputPath": "C:\\Users\\hendersoncastaneda\\Documents\\TestWebApiPolizasRabbit\\WebApiPolizas\\WebApiPolizas\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -71,6 +71,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.3, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.2.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
